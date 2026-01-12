@@ -1,0 +1,79 @@
+---
+// src/components/SEO.astro
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: 'es' | 'en';
+  image?: string;
+  url?: string;
+  type?: 'website' | 'article' | 'profile';
+  author?: string;
+  keywords?: string[];
+}
+
+const {
+  title,
+  description,
+  lang = 'es',
+  image = '/og-image.jpg',
+  url = Astro.url.href,
+  type = 'website',
+  author = 'Tu Nombre',
+  keywords = []
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="author" content={author} />
+{keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Language -->
+<html lang={lang} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={image} />
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": author,
+    "url": url,
+    "jobTitle": "Full Stack Developer & Project Manager",
+    "description": description,
+    "sameAs": [
+      "https://github.com/tuusuario",
+      "https://linkedin.com/in/tuusuario",
+      "https://twitter.com/tuusuario"
+    ]
+  }
+</script>
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#00ff9f" />
+
+<!-- Viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />

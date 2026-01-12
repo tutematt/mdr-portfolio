@@ -1,11 +1,174 @@
 ---
-import Welcome from '../components/Welcome.astro';
+// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
+import Terminal from '../components/Terminal';
+import ProfileHeader from '../components/ProfileHeader.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import ContentSection from '../components/ContentSection.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SkillCategory from '../components/SkillCategory.astro';
+import ContactCard from '../components/ContactCard.astro';
+import PortfolioFooter from '../components/PortfolioFooter.astro';
+import { portfolioData } from '../data/portfolio';
+
+// Meta data para SEO
+const metaDescription = {
+  es: 'Ingeniero de Software Full-Stack con más de 6 años de experiencia entregando aplicaciones empresariales y web de extremo a extremo.',
+  en: 'Full-Stack Software Engineer with 6+ years of experience delivering enterprise and web applications end-to-end.'
+};
+
+const defaultLang = 'es';
 ---
 
-<Layout>
-	<Welcome />
+<Layout 
+  title="MDR Software Engineer - Portfolio"
+  description={metaDescription[defaultLang]}
+  lang={defaultLang}
+>
+  <main class="portfolio-main">
+    <div class="container">
+      
+      <ProfileHeader profile={portfolioData.profile} lang={defaultLang} />
+    
+      <Terminal client:load lang={defaultLang} autoExecuteHelp={true} />
+
+      <!-- About Section -->
+      <ContentSection id="about" title="about">
+        <div class="about-content">
+          {portfolioData.about[defaultLang].split('\n\n').map(paragraph => (
+            <p class={paragraph.startsWith('Ingeniero') || paragraph.startsWith('Computer') ? 'lead-text' : ''}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </ContentSection>
+
+      <!-- Experience Section -->
+      <ContentSection id="experience" title="experience">
+        {portfolioData.experiences.map((exp, index) => (
+          <ExperienceItem 
+            experience={exp} 
+            lang={defaultLang} 
+            isLast={index === portfolioData.experiences.length - 1}
+          />
+        ))}
+      </ContentSection>
+
+      <!-- Projects Section -->
+      <ContentSection id="projects" title="projects">
+        <div class="projects-grid">
+          {portfolioData.projects.map(project => (
+            <ProjectCard project={project} lang={defaultLang} />
+          ))}
+        </div>
+      </ContentSection>
+
+      <!-- Skills Section -->
+      <ContentSection id="skills" title="skills">
+        <div class="skills-grid">
+          {portfolioData.skillCategories.map(category => (
+            <SkillCategory category={category} lang={defaultLang} />
+          ))}
+        </div>
+      </ContentSection>
+
+      <!-- Contact Section -->
+      <ContentSection id="contact" title="contact">
+        <p class="contact-intro">
+          {defaultLang === 'es' 
+            ? '¿Tienes un proyecto en mente o simplemente quieres conectar? Estaré encantado de escucharte.'
+            : 'Do you have a project in mind or just want to connect? I\'d be happy to hear from you.'
+          }
+        </p>
+        <div class="contact-grid">
+          {portfolioData.contacts.map(contact => (
+            <ContactCard contact={contact} lang={defaultLang} />
+          ))}
+        </div>
+      </ContentSection>
+
+      <PortfolioFooter lang={defaultLang} />
+    </div>
+  </main>
 </Layout>
+
+<style>
+  .portfolio-main {
+    min-height: 100vh;
+    padding: 40px 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* About Section */
+  .about-content p {
+    margin-bottom: 16px;
+  }
+
+  .about-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .lead-text {
+    font-size: 1.125rem;
+    color: var(--text-white);
+    font-weight: 500;
+  }
+
+  /* Projects Grid */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  /* Skills Grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+  }
+
+  /* Contact Section */
+  .contact-intro {
+    font-size: 1.125rem;
+    color: var(--text-white);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .portfolio-main {
+      padding: 24px 0;
+    }
+
+    .container {
+      padding: 0 16px;
+    }
+
+    .projects-grid,
+    .skills-grid,
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Inicializar el idioma desde localStorage cuando carga la página
+  import { initLanguage } from '../stores/languageStore';
+  
+  initLanguage();
+</script>

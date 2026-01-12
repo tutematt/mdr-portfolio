@@ -1,0 +1,101 @@
+---
+// src/components/ProfileHeader.astro
+import type { Profile } from '../data/portfolio';
+import LanguageSwitcher from '../components/LanguageSwitcher';
+
+interface Props {
+  profile: Profile;
+  lang: 'es' | 'en';
+}
+
+const { profile, lang } = Astro.props;
+---
+
+<header class="profile-header">
+  <div class="profile-container">
+    <img 
+      src={profile.photo} 
+      alt={`${profile.name} profile photo`}
+      class="profile-photo"
+      width="120"
+      height="120"
+    />
+    <div class="profile-info">
+      <h1 class="profile-name">{profile.name}</h1>
+      <p class="profile-role">
+        <span class="text-cyan" aria-hidden="true">&gt;</span> 
+        {profile.role[lang]}
+      </p>
+      <!-- <p class="profile-tagline">
+        <span class="text-muted" aria-hidden="true"># </span>
+        {profile.tagline[lang]}
+      </p> -->
+      <LanguageSwitcher client:load />
+    </div>
+  </div>
+</header>
+
+<style>
+  .profile-header {
+    text-align: center;
+  }
+
+  .profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .profile-photo {
+    border-radius: 50%;
+    border: 3px solid var(--text-primary);
+    box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
+    object-fit: cover;
+  }
+
+  .profile-info {
+    text-align: left;
+  }
+
+  .profile-name {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .profile-role {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--text-white);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .profile-tagline {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .text-cyan {
+    color: var(--accent-cyan);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .profile-container {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .profile-info {
+      text-align: center;
+    }
+  }
+</style>

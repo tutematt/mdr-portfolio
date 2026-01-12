@@ -1,0 +1,73 @@
+---
+// src/components/ContactCard.astro
+import type { Contact } from '../data/portfolio';
+
+interface Props {
+  contact: Contact;
+  lang: 'es' | 'en';
+}
+
+const { contact, lang } = Astro.props;
+---
+
+<a 
+  href={contact.url} 
+  class="contact-card"
+  target={contact.url.startsWith('http') ? '_blank' : undefined}
+  rel={contact.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+  aria-label={`${contact.label[lang]}: ${contact.value}`}
+>
+  <span class="contact-icon" aria-hidden="true">{contact.icon}</span>
+  <div class="contact-info">
+    <span class="contact-label">{contact.label[lang]}</span>
+    <span class="contact-value">{contact.value}</span>
+  </div>
+</a>
+
+<style>
+  .contact-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--bg-terminal);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .contact-card:hover {
+    border-color: var(--text-primary);
+    transform: translateY(-2px);
+  }
+
+  .contact-card:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 4px;
+  }
+
+  .contact-icon {
+    font-size: 2rem;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .contact-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .contact-value {
+    font-size: 1rem;
+    color: var(--text-white);
+    font-weight: 500;
+  }
+</style>

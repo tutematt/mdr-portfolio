@@ -1,0 +1,40 @@
+---
+// src/components/TechTags.astro
+
+interface Props {
+  technologies: string[];
+}
+
+const { technologies } = Astro.props;
+---
+
+<div class="tech-tags" role="list" aria-label="Technologies used">
+  {technologies.map(tech => (
+    <span class="tech-tag" role="listitem">{tech}</span>
+  ))}
+</div>
+
+<style>
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .tech-tag {
+    padding: 4px 12px;
+    background: var(--bg-primary);
+    border: 1px solid var(--text-primary);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .tech-tag:hover {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+  }
+</style>

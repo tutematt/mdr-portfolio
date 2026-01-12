@@ -1,0 +1,112 @@
+---
+// src/components/ExperienceItem.astro
+import type { Experience } from '../data/portfolio';
+import TechTags from './TechTags.astro';
+
+interface Props {
+  experience: Experience;
+  lang: 'es' | 'en';
+  isLast?: boolean;
+}
+
+const { experience, lang, isLast = false } = Astro.props;
+---
+
+<article class={`experience-item ${isLast ? 'last' : ''}`}>
+  <div class="experience-header">
+    <h3 class="experience-title">{experience.title[lang]}</h3>
+    <time class="experience-period" datetime={experience.period.en}>
+      {experience.period[lang]}
+    </time>
+  </div>
+  
+  <p class="experience-company">{experience.company}</p>
+  
+  <p class="experience-description">
+    {experience.description[lang]}
+  </p>
+  
+  {experience.achievements && (
+    <div class="experience-achievements">
+      <h4>{lang === 'es' ? 'Logros destacados:' : 'Key achievements:'}</h4>
+      <ul>
+        {experience.achievements.map(achievement => (
+          <li>{achievement[lang]}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+  
+  <TechTags technologies={experience.technologies} />
+</article>
+
+<style>
+  .experience-item {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .experience-item.last {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .experience-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .experience-period {
+    color: var(--accent-cyan);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .experience-company {
+    color: var(--text-white);
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .experience-description {
+    margin-bottom: 16px;
+  }
+
+  .experience-achievements h4 {
+    color: var(--text-white);
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .experience-achievements ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .experience-achievements li {
+    padding-left: 24px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .experience-achievements li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--text-primary);
+    font-weight: bold;
+  }
+</style>

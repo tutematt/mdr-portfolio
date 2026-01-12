@@ -1,0 +1,119 @@
+---
+// src/components/ProjectCard.astro
+import type { Project } from '../data/portfolio';
+import TechTags from './TechTags.astro';
+
+interface Props {
+  project: Project;
+  lang: 'es' | 'en';
+}
+
+const { project, lang } = Astro.props;
+const linkText = lang === 'es' ? 'Ver en GitHub →' : 'View on GitHub →';
+---
+
+<article class="project-card">
+  <h3 class="project-name">{project.name[lang]}</h3>
+  
+  <p class="project-description">
+    {project.description[lang]}
+  </p>
+  
+  <div class="project-features">
+    <h4>{lang === 'es' ? 'Características principales:' : 'Key features:'}</h4>
+    <ul>
+      {project.features.map(feature => (
+        <li>{feature[lang]}</li>
+      ))}
+    </ul>
+  </div>
+  
+  <TechTags technologies={project.technologies} />
+  
+  {project.githubUrl && (
+    <a 
+      href={project.githubUrl} 
+      class="project-link" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      aria-label={`${project.name[lang]} - ${linkText}`}
+    >
+      {linkText}
+    </a>
+  )}
+</article>
+
+<style>
+  .project-card {
+    background: var(--bg-terminal);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--text-primary);
+  }
+
+  .project-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .project-description {
+    margin-bottom: 16px;
+    flex-grow: 1;
+  }
+
+  .project-features h4 {
+    color: var(--text-white);
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .project-features ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 16px;
+  }
+
+  .project-features li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 6px;
+    font-size: 0.875rem;
+  }
+
+  .project-features li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--text-primary);
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    margin-top: auto;
+  }
+
+  .project-link:hover {
+    color: var(--accent-cyan);
+  }
+
+  .project-link:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+</style>
