@@ -3,7 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 import Terminal from '../components/Terminal';
 import ProfileHeader from '../components/ProfileHeader.astro';
-
+import AboutSection from '../components/AboutSection.astro';
 import ContentSection from '../components/ContentSection.astro';
 import ExperienceItem from '../components/ExperienceItem.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -35,14 +35,8 @@ const defaultLang = 'es';
 
       <!-- About Section -->
       <ContentSection id="about" title="about">
-        <div class="about-content">
-          {portfolioData.about[defaultLang].split('\n\n').map(paragraph => (
-            <p class={paragraph.startsWith('Ingeniero') || paragraph.startsWith('Computer') ? 'lead-text' : ''}>
-              {paragraph}
-            </p>
-          ))}
-        </div>
-      </ContentSection>
+  <AboutSection about={portfolioData.about[defaultLang]} />
+</ContentSection>
 
       <!-- Experience Section -->
       <ContentSection id="experience" title="experience">
@@ -75,12 +69,12 @@ const defaultLang = 'es';
 
       <!-- Contact Section -->
       <ContentSection id="contact" title="contact">
-        <p class="contact-intro">
+        <!-- <p class="contact-intro">
           {defaultLang === 'es' 
             ? '¿Tienes un proyecto en mente o simplemente quieres conectar? Estaré encantado de escucharte.'
             : 'Do you have a project in mind or just want to connect? I\'d be happy to hear from you.'
           }
-        </p>
+        </p> -->
         <div class="contact-grid">
           {portfolioData.contacts.map(contact => (
             <ContactCard contact={contact} lang={defaultLang} />

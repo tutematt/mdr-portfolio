@@ -36,6 +36,7 @@ const linkText = lang === 'es' ? 'Ver en GitHub →' : 'View on GitHub →';
       class="project-link" 
       target="_blank" 
       rel="noopener noreferrer"
+      style="margin-top: 10px"
       aria-label={`${project.name[lang]} - ${linkText}`}
     >
       {linkText}
@@ -55,7 +56,6 @@ const linkText = lang === 'es' ? 'Ver en GitHub →' : 'View on GitHub →';
   }
 
   .project-card:hover {
-    transform: translateY(-4px);
     border-color: var(--text-primary);
   }
 

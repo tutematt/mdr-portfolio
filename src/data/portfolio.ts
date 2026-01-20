@@ -32,7 +32,8 @@ export interface Project {
 
 export interface Skill {
   name: string;
-  level: number; // 0-100
+  icon: string; 
+  color?: string;
 }
 
 export interface SkillCategory {
@@ -50,7 +51,22 @@ export interface Contact {
 
 export interface PortfolioData {
   profile: Profile;
-  about: Translation;
+  about: {
+    es: {
+      greeting: string;
+      intro: string;
+      expertise: string;
+      approach: string;
+      passion: string;
+    };
+    en: {
+      greeting: string;
+      intro: string;
+      expertise: string;
+      approach: string;
+      passion: string;
+    };
+  };
   experiences: Experience[];
   projects: Project[];
   skillCategories: SkillCategory[];
@@ -72,9 +88,20 @@ export const portfolioData: PortfolioData = {
   },
 
   about: {
-    es: `Hola! Soy Matias 👋🏻 Ingeniero en Informática con 7 años de trayectoria ascendente en el sector IT, evolucionando desde el desarrollo core hasta roles de Liderazgo Técnico y Consultoría. Especialista en diseñar e implementar soluciones de negocio escalables, con una visión integral que une el desarrollo Full Stack (JavaScript, Bases de Datos) con la estrategia empresarial (ERP/NetSuite).
-          Cuento con sólida experiencia liderando la definición técnica de proyectos, transformando requerimientos operativos complejos en arquitecturas robustas. Mi enfoque se centra en la calidad del software, la optimización de procesos críticos y la capacidad de articular soluciones tecnológicas que impulsan el valor del negocio. Me gusta mantenerme actualizado con las últimas tecnologías y metodologías ágiles, siempre buscando la mejora en oportunidades tecnicas y la colaboración efectiva.`,
-    en: `Hi! I'm Matias 👋🏻 Computer Engineer with 7 years of progressive experience in the IT sector, evolving from core development to Technical Leadership and Consulting roles. Specialist in designing and implementing scalable business solutions, with a comprehensive vision that combines Full Stack development (JavaScript, Databases) with business strategy (ERP/NetSuite).`
+    es: {
+      greeting: "Hola! Soy Matias 👋🏻",
+      intro: "Ingeniero en Informática con 7 años de trayectoria ascendente en el sector IT, evolucionando desde el desarrollo core hasta roles de Liderazgo Técnico y Consultoría.",
+      expertise: "Especialista en diseñar e implementar soluciones de negocio escalables, con una visión integral que une el desarrollo Full Stack (JavaScript, Bases de Datos) con la estrategia empresarial (ERP/NetSuite).",
+      approach: "Cuento con sólida experiencia liderando la definición técnica de proyectos, transformando requerimientos operativos complejos en arquitecturas robustas. Mi enfoque se centra en la calidad del software, la optimización de procesos críticos y la capacidad de articular soluciones tecnológicas que impulsan el valor del negocio.",
+      passion: "Me gusta mantenerme actualizado con las últimas tecnologías y metodologías ágiles, siempre buscando la mejora en oportunidades técnicas y la colaboración efectiva."
+    },
+    en: {
+      greeting: "Hi! I'm Matias 👋🏻",
+      intro: "Computer Engineer with 7 years of progressive experience in the IT sector, evolving from core development to Technical Leadership and Consulting roles.",
+      expertise: "Specialist in designing and implementing scalable business solutions, with a comprehensive vision that combines Full Stack development (JavaScript, Databases) with business strategy (ERP/NetSuite).",
+      approach: "I have solid experience leading the technical definition of projects, transforming complex operational requirements into robust architectures. My focus is on software quality, optimization of critical processes, and the ability to articulate technological solutions that drive business value.",
+      passion: "I enjoy staying updated with the latest technologies and agile methodologies, always seeking improvement in technical opportunities and effective collaboration."
+    }
   },
 
   experiences: [
@@ -216,60 +243,76 @@ export const portfolioData: PortfolioData = {
     },
   ],
 
-skillCategories: [
+  skillCategories: [
     {
       title: {
-        es: "Desarrollo Frontend & Web",
-        en: "Frontend & Web Development"
+        es: "Frontend & Web",
+        en: "Frontend & Web"
       },
       icon: "💻",
       skills: [
-        { name: "JavaScript (ES6+)", level: 90 },
-        { name: "HTML5 / CSS3", level: 95 },
-        { name: "Bootstrap", level: 85 },
-        { name: "Responsive Design", level: 88 }
+        { name: "JavaScript (ES6+)", icon: "📜", color: "#F7DF1E" },
+        { name: "React", icon: "⚛️", color: "#61DAFB" },
+        { name: "Astro", icon: "🚀", color: "#FF5D01" },
+        { name: "Bootstrap 5", icon: "🅱️", color: "#7952B3" },
+        { name: "HTML5 / CSS3", icon: "🎨", color: "#E34F26" }
       ]
     },
     {
       title: {
-        es: "Backend & Bases de Datos",
-        en: "Backend & Databases"
+        es: "Backend & ERP",
+        en: "Backend & ERP"
       },
-      icon: "🗄️",
+      icon: "⚙️",
       skills: [
-        { name: "Oracle Database", level: 85 },
-        { name: "Microsoft SQL Server", level: 85 },
-        { name: "SQL / T-SQL", level: 90 },
-        { name: "API Integrations", level: 88 }
+        { name: "Java", icon: "☕", color: "#5382A1" },
+        { name: "Spring Boot", icon: "🍃", color: "#6DB33F" },
+        { name: "Node.js", icon: "🟢", color: "#339933" },
+        { name: "SuiteScript (NetSuite)", icon: "☁️", color: "#000000" },
+        { name: "REST APIs", icon: "🔌", color: "#00D9FF" }
       ]
     },
     {
       title: {
-        es: "ERP & Ecosistema Enterprise",
-        en: "ERP & Enterprise Ecosystem"
+        es: "Bases de Datos",
+        en: "Databases"
       },
-      icon: "🏢",
+      icon: "💾",
       skills: [
-        { name: "Oracle NetSuite", level: 90 },
-        { name: "SuiteScript", level: 85 },
-        { name: "Enterprise Deployments", level: 80 },
-        { name: "System Stability", level: 85 }
+        { name: "Oracle DB", icon: "📕", color: "#F80000" },
+        { name: "SQL Server (MSSQL)", icon: "🗄️", color: "#CC2927" },
+        { name: "SQL / T-SQL", icon: "🔍", color: "#00758F" }
       ]
     },
     {
       title: {
-        es: "Liderazgo & Consultoría",
-        en: "Leadership & Consulting"
+        es: "Gestión & DevOps",
+        en: "Management & DevOps"
       },
-      icon: "🤝",
+      icon: "🚀",
       skills: [
-        { name: "Solution Architecture", level: 88 },
-        { name: "Business Analysis", level: 90 },   
-        { name: "Technical Support", level: 85 },
-        { name: "Project Management", level: 80 }
+        { name: "Jira", icon: "📋", color: "#0052CC" }, // Agregado
+        { name: "Microsoft Project", icon: "📅", color: "#31752F" }, // Agregado
+        { name: "Git / GitHub", icon: "🐙", color: "#F05032" },
+        { name: "Technical Leadership", icon: "👔", color: "#00FF9F" },
+        { name: "Scrum / Agile", icon: "📊", color: "#0052CC" }
+      ]
+    },
+    {
+      title: {
+        es: "Diseño & Multimedia",
+        en: "Design & Multimedia"
+      },
+      icon: "🎨",
+      skills: [
+        { name: "Adobe Premiere Pro", icon: "🎬", color: "#9999FF" },
+        { name: "Adobe Photoshop", icon: "🔵", color: "#31A8FF" },
+        { name: "Adobe Illustrator", icon: "✒️", color: "#FF9A00" }
       ]
     }
   ],
+
+
 
   contacts: [
     {
@@ -289,12 +332,6 @@ skillCategories: [
       icon: "💼",
       value: "/in/matiasrodoni",
       url: "https://www.linkedin.com/in/matiasdrodoni"
-    },
-    {
-      label: { es: "Twitter", en: "Twitter" },
-      icon: "🐦",
-      value: "@tuusuario",
-      url: "https://twitter.com/tuusuario"
     }
   ]
 };
